@@ -1,0 +1,249 @@
+/* === Reset & Base === */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+    color: #333;
+    flex-direction: row;
+}
+
+p {
+    font-size: 14px;
+    margin: 5px 0;
+    color: #555;
+}
+
+h1 {
+    font-size: 50px;
+    color: #333;
+    margin: 0 0 15px 0;
+}
+
+h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+strong {
+    color: #333;
+}
+
+/* === Sidebar === */
+.sidebar {
+    width: 220px;
+    background: linear-gradient(to bottom, #FF4B2B, #FF416C);
+    color: white;
+    padding: 30px 20px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.sidebar h2 {
+    font-size: 22px;
+    margin-bottom: 40px;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.sidebar ul li {
+    margin: 15px 0;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: background 0.3s, padding-left 0.3s;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding-left: 25px;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Logout link styling */
+.logout-link {
+    color: #fff;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    padding-top: 20px;
+    font-weight: bold;
+    display: block;
+    text-align: center;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.logout-link:hover,
+.logout-link:focus {
+    background-color: #c82333;
+    border-color: #c82333;
+    cursor: pointer;
+    outline: none;
+}
+
+/* === Main Content Area === */
+.main-content {
+    margin-left: 240px; /* Sidebar width + spacing */
+    padding: 30px;
+    flex: 1;
+    overflow-y: auto;
+    background-color: #f4f4f4;
+    height: 100vh;
+    box-sizing: border-box;
+    transition: margin-left 0.3s ease-in-out;
+}
+
+/* === Sections === */
+.section {
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+/* === Buttons === */
+.button {
+    display: inline-block;
+    margin-top: 20px;
+    background-color: #FF4B2B;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.button:hover,
+.button:focus {
+    background-color: #e03e23;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    outline: none;
+}
+
+/* Logout button variation */
+.logout {
+    background-color: transparent;
+    border: 1px solid #FFFFFF;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 30px;
+    text-align: center;
+    display: inline-block;
+    transition: background-color 0.3s;
+}
+
+.logout:hover,
+.logout:focus {
+    background-color: #c82333;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Scrollbar styling for main content */
+.main-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+    background: #f4f4f4;
+}
+
+.main-content::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+    border: 2px solid #f4f4f4;
+}
+
+/* === Responsive === */
+@media screen and (max-width: 900px) {
+    body {
+        flex-direction: column;
+        overflow: auto;
+    }
+
+    .sidebar {
+        position: fixed;
+        width: 220px;
+        height: 100%;
+        top: 0;
+        left: 0;
+        transform: translateX(-100%);
+        z-index: 1100;
+        box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+        height: calc(100vh - 50px);
+        overflow-y: auto;
+        transition: margin-left 0.3s ease-in-out;
+    }
+
+    /* Menu button */
+    .menu-btn {
+        position: fixed;
+        top: 15px;
+        left: 15px;
+        background-color: #FF4B2B;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        z-index: 1200;
+        font-size: 18px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        user-select: none;
+        opacity: 0.5;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    h2 {
+        font-size: 18px;
+    }
+
+    .button {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+}

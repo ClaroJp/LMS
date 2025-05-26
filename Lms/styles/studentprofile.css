@@ -1,0 +1,68 @@
+body { 
+    font-family: Arial, sans-serif; 
+    background: #f0f0f0; 
+    padding: 20px; 
+}
+.container { 
+    background: white; 
+    padding: 20px; 
+    max-width: 300px; 
+    margin: auto; 
+    border-radius: 8px; 
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+}
+h2 { 
+    text-align: center; 
+}
+form div { 
+    margin-bottom: 10px; 
+}
+label { 
+    display: block; 
+    margin-bottom: 5px; 
+    font-weight: bold; 
+    margin: 10px;
+}
+input[type="text"], input[type="date"], select, textarea {
+    width: 100%; 
+    padding: 8px; 
+    box-sizing: border-box; 
+    border: 1px solid #ccc; 
+    border-radius: 4px;
+}
+
+button {
+    display: inline-block;
+    background-color: #FF4B2B;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+}
+
+button:hover {
+    background-color: #FF416C;
+}
+
+a {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007BFF;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+a:hover {
+    background-color: #0056b3;
+}
