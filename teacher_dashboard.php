@@ -183,7 +183,7 @@ foreach ($subjects as $subject) {
         <ul>
             <li><a href="teacher_dashboard.php">🏠 Home</a></li>
             <li><a href="todo.php">📝 To-Do List</a></li>
-            <li><a href="courses.php">📚 Subjects</a></li>
+            <li><a href="subjects.php">My Subjects</a></li>
             <li><a href="create_subject.php">➕ Create Subject</a></li>
             <li><a href="chat.php">💬 Chat</a></li>
             <li><a href="logout.php" class="logout-link">🚪 Logout</a></li>
@@ -222,7 +222,8 @@ foreach ($subjects as $subject) {
                     <option value="" disabled selected>-- Choose Subject --</option>
                     <?php foreach ($subjects as $subject): ?>
                         <option value="<?php echo $subject['id']; ?>">
-                            <?php echo htmlspecialchars($subject['subject_name']); ?></option>
+                            <?php echo htmlspecialchars($subject['subject_name']); ?>
+                        </option>
                     <?php endforeach; ?>
                 </select>
                 <br><br>
@@ -263,44 +264,7 @@ foreach ($subjects as $subject) {
             </section>
         <?php endif; ?>
 
-        <section class="section" aria-label="Track Student Progress">
-            <h2>📊 Track Student Progress</h2>
-            <?php if (count($subjects) === 0): ?>
-                <p>No subjects, no students to track.</p>
-            <?php else: ?>
-                <?php foreach ($subjects as $subject): ?>
-                    <h3><?php echo htmlspecialchars($subject['subject_name']); ?></h3>
-                    <?php if (empty($studentsProgress[$subject['id']])): ?>
-                        <p>No students enrolled yet.</p>
-                    <?php else: ?>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Student Name</th>
-                                    <th>Progress Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($studentsProgress[$subject['id']] as $student): ?>
-                                    <tr>
-                                        <td><?php echo htmlspecialchars($student['first_name'] . ' ' . $student['last_name']); ?></td>
-                                        <td><?php echo htmlspecialchars($student['progress']); ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            <?php endif; ?>
-        </section>
-
-        <section class="section" aria-label="Message Center">
-            <h2>💬 Message Center</h2>
-            <p>This feature is coming soon! Stay tuned.</p>
-        </section>
-    </div>
-
-    <script src="./scripts/dashboard.js"></script>
+        <script src="./scripts/dashboard.js"></script>
 </body>
 
 </html>

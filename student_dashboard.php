@@ -17,7 +17,7 @@ if (!$student || empty($student['course']) || empty($student['year_level'])) {
     header("Location: student_details.php");
     exit;
 }
-    
+
 $message = '';
 $message_type = ''; // 'success' or 'error'
 
@@ -70,31 +70,33 @@ $enrolledSubjects = $stmt->fetchAll();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Student Dashboard</title>
     <link rel="stylesheet" href="./styles/dashboard.css" />
 </head>
+
 <body>
     <button id="menuBtn" class="menu-btn" aria-label="Toggle menu">☰ Menu</button>
 
     <div class="sidebar">
-    <h2>LMS</h2>
-    <ul>
-        <li><a href="student_dashboard.php">🏠 Home</a></li>
-        <li><a href="todo.php">📝 To-Do List</a></li>
-        <li><a href="courses.php">📚 Courses</a></li>
-        <li><a href="chat.php">💬 Chat</a></li>
-        <li><a href="logout.php" class="logout-link">🚪 Logout</a></li>
-    </ul>
+        <h2>LMS</h2>
+        <ul>
+            <li><a href="student_dashboard.php">🏠 Home</a></li>
+            <li><a href="todo.php">📝 To-Do List</a></li>
+            <li><a href="subjects.php">My Subjects</a></li>
+            <li><a href="chat.php">💬 Chat</a></li>
+            <li><a href="logout.php" class="logout-link">🚪 Logout</a></li>
+        </ul>
     </div>
 
 
     <div class="main-content">
         <h1>Welcome, <?php echo htmlspecialchars($_SESSION['user']['username']); ?>!</h1>
         <p>
-            Course: <?php echo htmlspecialchars($student['course']); ?> | 
+            Course: <?php echo htmlspecialchars($student['course']); ?> |
             Year: <?php echo htmlspecialchars($student['year_level']); ?>
         </p>
 
@@ -132,4 +134,5 @@ $enrolledSubjects = $stmt->fetchAll();
 
     <script src="./scripts/dashboard.js"></script>
 </body>
+
 </html>
