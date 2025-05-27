@@ -77,7 +77,69 @@ $enrolledSubjects = $stmt->fetchAll();
     <title>Student Dashboard</title>
     <link rel="stylesheet" href="./styles/dashboard.css" />
 </head>
+<style>
+    /* Join a Subject form inside .section */
 
+.section {
+    background-color: #fff;
+    padding: 1.5rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.join-subject-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 320px;
+}
+
+.join-subject-form label {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: #34495e;
+}
+
+.join-subject-form input[type="text"] {
+    padding: 0.5rem 0.75rem;
+    font-size: 1rem;
+    border: 1.5px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.join-subject-form input[type="text"]:focus {
+    outline: none;
+    border-color: #2980b9;
+    box-shadow: 0 0 5px rgba(41, 128, 185, 0.4);
+}
+
+.join-subject-form button {
+    padding: 0.6rem 1rem;
+    background-color: #2980b9;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.join-subject-form button:hover,
+.join-subject-form button:focus {
+    background-color: #1c5980;
+    outline: none;
+}
+
+</style>
 <body>
     <button id="menuBtn" class="menu-btn" aria-label="Toggle menu">☰ Menu</button>
 
@@ -87,6 +149,7 @@ $enrolledSubjects = $stmt->fetchAll();
             <li><a href="student_dashboard.php">🏠 Home</a></li>
             <li><a href="todo.php">📝 To-Do List</a></li>
             <li><a href="subjects.php">My Subjects</a></li>
+            <li><a href="materials.php">📤 Materials</a></li>
             <li><a href="chat.php">💬 Chat</a></li>
             <li><a href="logout.php" class="logout-link">🚪 Logout</a></li>
         </ul>

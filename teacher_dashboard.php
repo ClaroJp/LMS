@@ -120,61 +120,67 @@ foreach ($subjects as $subject) {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Teacher Dashboard</title>
     <link rel="stylesheet" href="./styles/dashboard.css" />
-    <style>
-        /* Quick styling for tables */
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        .upload-message {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-
-        .upload-message.success {
-            color: green;
-        }
-
-        .upload-message.error {
-            color: red;
-        }
-
-        .material-list {
-            list-style-type: none;
-            padding-left: 0;
-            margin-top: 5px;
-            margin-bottom: 20px;
-        }
-
-        .material-list li {
-            margin-bottom: 4px;
-        }
-
-        .material-list a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .material-list a:hover {
-            text-decoration: underline;
-        }
-    </style>
 </head>
+<style>
+    /* Your Subjects section */
 
+.section {
+    background-color: #fff;
+    padding: 1.5rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+}
+
+.section h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: #2c3e50;
+}
+
+.section p {
+    font-size: 1rem;
+    color: #666;
+}
+
+.section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.section ul li {
+    background: #f7f9fc;
+    border-left: 4px solid #3498db;
+    padding: 1rem 1.2rem;
+    margin-bottom: 0.8rem;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.section ul li:hover {
+    background-color: #e8f0fe;
+}
+
+.section ul li strong {
+    font-size: 1.1rem;
+    color: #34495e;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.section ul li a {
+    font-weight: 500;
+    color: #2980b9;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.section ul li a:hover {
+    text-decoration: underline;
+}
+
+</style>
 <body>
     <button id="menuBtn" class="menu-btn" aria-label="Toggle menu">☰ Menu</button>
 
@@ -185,8 +191,10 @@ foreach ($subjects as $subject) {
             <li><a href="todo.php">📝 To-Do List</a></li>
             <li><a href="subjects.php">My Subjects</a></li>
             <li><a href="create_subject.php">➕ Create Subject</a></li>
+            <li><a href="materials.php">📤 Materials</a></li>
             <li><a href="chat.php">💬 Chat</a></li>
             <li><a href="logout.php" class="logout-link">🚪 Logout</a></li>
+
         </ul>
     </div>
 
@@ -213,57 +221,6 @@ foreach ($subjects as $subject) {
                 </ul>
             <?php endif; ?>
         </section>
-
-        <section class="section" aria-label="Upload Materials">
-            <h2>📤 Upload Materials</h2>
-            <form method="POST" enctype="multipart/form-data" aria-describedby="uploadHelp">
-                <label for="subject_id">Select Subject:</label>
-                <select name="subject_id" id="subject_id" required>
-                    <option value="" disabled selected>-- Choose Subject --</option>
-                    <?php foreach ($subjects as $subject): ?>
-                        <option value="<?php echo $subject['id']; ?>">
-                            <?php echo htmlspecialchars($subject['subject_name']); ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <br><br>
-                <label for="material_file">Choose file to upload:</label>
-                <input type="file" name="material_file" id="material_file" required />
-                <br><br>
-                <input type="hidden" name="csrf_token" value="<?php echo $csrf_token; ?>" />
-                <button type="submit" name="upload_material" class="button">Upload</button>
-            </form>
-            <?php if ($uploadMessage): ?>
-                <p id="uploadHelp" class="upload-message <?php echo $uploadError ? 'error' : 'success'; ?>">
-                    <?php echo htmlspecialchars($uploadMessage); ?>
-                </p>
-            <?php endif; ?>
-        </section>
-
-        <?php if (count($subjects) > 0): ?>
-            <section class="section" aria-label="Uploaded Materials">
-                <h2>🗂 Uploaded Materials</h2>
-                <?php foreach ($subjects as $subject): ?>
-                    <h3><?php echo htmlspecialchars($subject['subject_name']); ?></h3>
-                    <?php if (empty($materialsBySubject[$subject['id']])): ?>
-                        <p>No materials uploaded yet.</p>
-                    <?php else: ?>
-                        <ul class="material-list">
-                            <?php foreach ($materialsBySubject[$subject['id']] as $mat): ?>
-                                <li>
-                                    <a href="<?php echo htmlspecialchars($mat['file_path']); ?>" target="_blank"
-                                        rel="noopener noreferrer">
-                                        <?php echo basename($mat['file_path']); ?>
-                                    </a>
-                                    <small>(uploaded at <?php echo htmlspecialchars($mat['uploaded_at']); ?>)</small>
-                                </li>
-                            <?php endforeach; ?>
-                        </ul>
-                    <?php endif; ?>
-                <?php endforeach; ?>
-            </section>
-        <?php endif; ?>
-
         <script src="./scripts/dashboard.js"></script>
 </body>
 

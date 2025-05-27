@@ -44,11 +44,14 @@ try {
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>My Subjects</title>
-<link rel="stylesheet" href="./styles/subjects.css">
+    <link rel="stylesheet" href="./styles/subjects.css">
 </head>
+
 <body>
+    <button id="menuBtn" class="menu-btn" aria-label="Toggle menu">☰ Menu</button>
     <div class="sidebar">
         <h2>LMS</h2>
         <ul>
@@ -56,12 +59,14 @@ try {
                 <li><a href="teacher_dashboard.php">🏠 Home</a></li>
                 <li><a href="todo.php">📝 To-Do List</a></li>
                 <li><a href="subjects.php">My Subjects</a></li>
+                <li><a href="materials.php">📤 Materials</a></li>
                 <li><a href="create_subject.php">➕ Create Subject</a></li>
                 <li><a href="chat.php">💬 Chat</a></li>
             <?php else: ?>
                 <li><a href="student_dashboard.php">🏠 Home</a></li>
                 <li><a href="todo.php">📝 To-Do List</a></li>
                 <li><a href="subjects.php">My Subjects</a></li>
+                <li><a href="materials.php">📤 Materials</a></li>
                 <li><a href="chat.php">💬 Chat</a></li>
             <?php endif; ?>
             <li><a href="logout.php" class="logout-link">🚪 Logout</a></li>
@@ -69,7 +74,7 @@ try {
     </div>
 
     <div class="main-content">
-        
+
         <?php if (empty($subjects)): ?>
             <p class="no-subjects">No subjects found.</p>
         <?php else: ?>
@@ -85,6 +90,7 @@ try {
             </div>
         <?php endif; ?>
     </div>
-
+<script src="./scripts/dashboard.js"></script>
 </body>
+
 </html>
