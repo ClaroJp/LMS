@@ -12,13 +12,13 @@ $stmt = $conn->prepare("SELECT * FROM teachers WHERE user_id = ?");
 $stmt->execute([$_SESSION['user']['id']]);
 $teacher = $stmt->fetch();
 
-// Redirect if teacher profile is incomplete
+// Redirect if profile is incomplete
 if (!$teacher || empty($teacher['department']) || empty($teacher['expertise'])) {
     header("Location: teacher_details.php");
     exit;
 }
 
-// Fetch subjects for this teacher
+// Fetch subjects
 $stmt = $conn->prepare("SELECT * FROM subjects WHERE teacher_id = ?");
 $stmt->execute([$_SESSION['user']['id']]);
 $subjects = $stmt->fetchAll();
@@ -30,16 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_material'])) {
         $fileTmpPath = $_FILES['material_file']['tmp_name'];
         $fileName = basename($_FILES['material_file']['name']);
         $uploadDir = 'uploads/materials/';
-
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0755, true);
         }
-
         $destPath = $uploadDir . uniqid() . '-' . $fileName;
 
         if (move_uploaded_file($fileTmpPath, $destPath)) {
-            // Save upload record to DB (optional)
-            // For example: insert into materials table: subject_id, file_path, uploaded_at
             $subject_id = $_POST['subject_id'] ?? 0;
             if ($subject_id && in_array($subject_id, array_column($subjects, 'id'))) {
                 $stmt = $conn->prepare("INSERT INTO materials (subject_id, file_path, uploaded_at) VALUES (?, ?, NOW())");
@@ -47,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_material'])) {
                 $uploadMessage = "Material uploaded successfully.";
             } else {
                 $uploadMessage = "Invalid subject selected.";
-                unlink($destPath); // Remove uploaded file if subject invalid
+                unlink($destPath);
             }
         } else {
             $uploadMessage = "Error moving uploaded file.";
@@ -57,33 +53,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['upload_material'])) {
     }
 }
 
-// Fetch enrolled students with progress (simplified demo)
+// Fetch student progress per subject
 $studentsProgress = [];
 foreach ($subjects as $subject) {
     $stmt = $conn->prepare("
-        SELECT s.user_id, s.first_name, s.last_name,
-            IFNULL(sp.progress, 'Not started') AS progress
+        SELECT s.student_id, s.first_name, s.last_name,
+               IFNULL(sp.progress, 'Not started') AS progress
         FROM students s
-        JOIN student_subjects ss ON s.user_id = ss.student_id
-        LEFT JOIN student_progress sp ON sp.student_id = s.user_id AND sp.subject_id = ss.subject_id
+        JOIN student_subjects ss ON s.student_id = ss.student_id
+        LEFT JOIN student_progress sp ON sp.student_id = s.student_id AND sp.subject_id = ss.subject_id
         WHERE ss.subject_id = ?
     ");
     $stmt->execute([$subject['id']]);
     $studentsProgress[$subject['id']] = $stmt->fetchAll();
 }
-
-// Message center placeholder (can extend with DB in future)
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="UTF-8">
     <title>Teacher Dashboard</title>
-    <link rel="stylesheet" href="./styles/dashboard.css" />
+    <link rel="stylesheet" href="./styles/dashboard.css">
     <style>
-        /* Quick styling for tables */
         table {
             border-collapse: collapse;
             width: 100%;
@@ -113,6 +105,8 @@ foreach ($subjects as $subject) {
             <li><a href="todo.php">📝 To-Do List</a></li>
             <li><a href="courses.php">📚 Subjects</a></li>
             <li><a href="create_subject.php">➕ Create Subject</a></li>
+            <li><a href="notifications.php">🔔 Notifications</a></li>
+            <li><a href="student_progress.php">📈 Assignment Progress</a></li>
             <li><a href="logout.php" class="logout-link">🚪 Logout</a></li>
         </ul>
     </div>
@@ -120,7 +114,7 @@ foreach ($subjects as $subject) {
     <div class="main-content">
         <h1>Welcome, <?php echo htmlspecialchars($_SESSION['user']['username']); ?>!</h1>
         <p>
-            Department: <?php echo htmlspecialchars($teacher['department']); ?> | 
+            Department: <?php echo htmlspecialchars($teacher['department']); ?> |
             Expertise: <?php echo htmlspecialchars($teacher['expertise']); ?>
         </p>
 
@@ -132,8 +126,7 @@ foreach ($subjects as $subject) {
                 <ul>
                     <?php foreach ($subjects as $subject): ?>
                         <li>
-                            <strong><?php echo htmlspecialchars($subject['subject_name']); ?></strong>
-                            <br>
+                            <strong><?php echo htmlspecialchars($subject['subject_name']); ?></strong><br>
                             <a href="subject.php?id=<?php echo $subject['id']; ?>">➡️ Go to Subject Dashboard</a>
                         </li>
                     <?php endforeach; ?>
@@ -148,12 +141,12 @@ foreach ($subjects as $subject) {
                 <select name="subject_id" id="subject_id" required>
                     <option value="" disabled selected>-- Choose Subject --</option>
                     <?php foreach ($subjects as $subject): ?>
-                        <option value="<?php echo $subject['id']; ?>"><?php echo htmlspecialchars($subject['subject_name']); ?></option>
+                        <option value="<?php echo $subject['id']; ?>">
+                            <?php echo htmlspecialchars($subject['subject_name']); ?>
+                        </option>
                     <?php endforeach; ?>
-                </select>
-                <br><br>
-                <input type="file" name="material_file" required />
-                <br><br>
+                </select><br><br>
+                <input type="file" name="material_file" required><br><br>
                 <button type="submit" name="upload_material" class="button">Upload</button>
             </form>
             <?php if ($uploadMessage): ?>
